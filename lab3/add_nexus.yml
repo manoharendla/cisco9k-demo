@@ -1,0 +1,33 @@
+---
+- name: Configure Nexus Interfaces
+  hosts: cisco_9k
+  connection: network_cli
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: Configure Interfaces
+      nxos_interfaces:
+        config: "{{ interfaces }}"
+    - name: Configure L3 Interfaces
+      nxos_l3_interfaces:
+        config: "{{ l3_interfaces }}"
+
+    - name: Enable OSPF
+      nxos_feature:
+          feature: ospf
+          state: enabled
+
+    - name: Configure OSPF Process
+      nxos_ospf:
+        ospf: "{{ ospf.name }}"
+        state: present
+
+    - name: Configure OSPF Interfaces
+      nxos_interface_ospf:
+        area: "{{ item.area }}"
+        interface: "{{ item.interface }}"
+        network: "{{ item.network }}"
+        ospf: "{{ ospf.name }}"
+      loop: "{{ ospf_interfaces }}"
