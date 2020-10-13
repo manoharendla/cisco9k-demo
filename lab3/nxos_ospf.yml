@@ -1,9 +1,7 @@
 ---
 - name: Configure Nexus Interfaces
   hosts: cisco_9k
-  connection: network_cli
   gather_facts: false
-  become: true
 
   vars:
     interfaces:
