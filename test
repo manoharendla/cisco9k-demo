@@ -1,0 +1,7 @@
+TASK [ios_command] *****************************************************************************************************************************************************
+ok: [router-3] => changed=false 
+  stdout:
+  - |-
+    Cisco IOS XE Software, Version 16.03.01
+    Cisco IOS Software [Denali], CSR1000V Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.3.1, RELEASE SOFTWARE (fc3)
+    Technical Support: http://www.cisco.com/techsupport
