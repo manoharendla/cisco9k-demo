@@ -1,0 +1,45 @@
+---
+- name: Stage and reload ios 
+  hosts: router-1
+  connection: network_cli
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Copy test iso file
+      net_put:
+        src: "{{ playbook_dir }}/softwares/test.iso"
+        dest: "flash:test.iso"
+        protocol: scp
+
+    - name: Check if file copied
+      ios_command:
+        commands:
+          - "dir"
+        wait_for: result[0] contains test.iso
+
+      register: dir_out
+    - debug:
+        var: dir_out.stdout_lines
+    
+    - name: Show install summary
+      ios_command:
+        commands:
+          - "show install summary"
+      register: install_out
+    - debug:
+        var: install_out.stdout_lines
+    
+    - name: Show mac address table
+      ios_command:
+        commands:
+          - "show mac address-table"
+      register: mac_out
+    - debug:
+        var: mac_out.stdout_lines
+
+
+  
+
+ 
+
+
